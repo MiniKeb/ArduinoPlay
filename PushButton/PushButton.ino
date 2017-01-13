@@ -1,14 +1,29 @@
 #include <Adafruit_NeoPixel.h>
+#include "Ribbon.h"
 
 #define TIMEVALUES_COUNT 12
 #define RIBBON_SIZE 60
 
-
-struct Color{
-  byte red;
-  byte green;
-  byte blue;
+struct K2000State{
+  int currentIteration;
+  int size = 3;
 };
+
+struct ConfigurationState{
+
+};
+
+struct TimerState{
+
+};
+
+struct State{
+  K2000State k2000State;
+  ConfigurationState configState;
+  TimerState timerState;
+};
+
+
 
 Color colors[2] = {
   {0, 255, 0},
@@ -64,3 +79,6 @@ void colorRibbonByTime(int timevalue){
     }   
 }
 
+void k2000(Adafruit_NeoPixel &strip){
+  
+}
