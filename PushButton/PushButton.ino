@@ -44,24 +44,56 @@ void setup() {
   //pinMode(buttonPin, INPUT);
   strip.begin();
 
-  for(int i = 0; i < RIBBON_SIZE; i++){
-    strip.setPixelColor(i, (i*237)%256, (i*176)%256, (i*542)%256);
-  }
+  strip.setPixelColor(5, 0, 255, 0);
+  strip.setPixelColor(6, 255, 0, 0);
+  strip.setPixelColor(7, 0, 255, 0);
+  strip.setPixelColor(8, 0, 0, 255);
+  strip.setPixelColor(9, 0, 255, 0);
+//  for(int i = 0; i < RIBBON_SIZE; i++){
+//    strip.setPixelColor(i, (i*237)%256, (i*176)%256, (i*542)%256);
+//  }
   strip.setBrightness(60);
   strip.show();
   Serial.begin(9600);
 }
 
 void loop() {
+//  delay(500);
+//  uint32_t color = strip.getPixelColor(count);
+//  uint8_t red = (color >> 16)+4;
+//  uint8_t green = (color >> 8)+4;
+//  uint8_t blue = color+4;
+//  Serial.print(red);
+//  Serial.print(";");
+//  Serial.print(green);
+//  Serial.print(";");
+//  Serial.print(blue);
+//  Serial.print("\r\n");
+//  count++;
+//  strip.setPixelColor(count, red, green, blue);
+//  strip.setBrightness(60);
+//  strip.show();
+//  
   uint32_t color = strip.getPixelColor(0);
   for(int i = 0; i < RIBBON_SIZE-1; i++){
     uint32_t nextColor = strip.getPixelColor(i+1);
-    strip.setPixelColor(i, nextColor);
+    uint8_t red = (nextColor >> 16)+4;
+    uint8_t green = (nextColor >> 8)+4;
+    uint8_t blue = nextColor+4;
+    strip.setPixelColor(i, red, green, blue);
   }
-  strip.setPixelColor(RIBBON_SIZE-1, color);
+  uint8_t red = (color >> 16)+4;
+  uint8_t green = (color >> 8)+4;
+  uint8_t blue = color+4;
+  strip.setPixelColor(RIBBON_SIZE-1, red, green, blue);
   strip.setBrightness(60);
-  delay(500);
+  delay(50);
   strip.show();
+
+
+
+
+  
   
 //  int val = digitalRead(buttonPin);
 //  if(val != currentState)
