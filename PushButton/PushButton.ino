@@ -47,22 +47,16 @@ void loop() {
 
 void shift(int span)
 {
-  if(span == 1){
-  
-    Color color = getColor(0);
-    for(int i = 0; i < RIBBON_SIZE-1; i++){
-      Color nextColor = getColor(i+span);
+  Color color = getColor(0);
+  int i = 0;
+  do{
+    int next = (i+ span + RIBBON_SIZE) % RIBBON_SIZE;
+      Color nextColor = getColor(next);
       setColor(i, nextColor);
-    }
-    setColor((RIBBON_SIZE-span)%RIBBON_SIZE, color);
-  }else{
-    Color color = getColor(RIBBON_SIZE-1);
-    for(int i = RIBBON_SIZE-1; i > 0; i--){
-      Color nextColor = getColor(i+span);
-      setColor(i, nextColor);
-    }
-    setColor(0, color);
-  }
+    i = next;
+  }while(i != 0);
+  setColor(i, color);
+
   strip.setBrightness(60);
   strip.show();
 }
