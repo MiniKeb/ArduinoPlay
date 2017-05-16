@@ -1,34 +1,14 @@
 #include <Adafruit_NeoPixel.h>
-//#include "Ribbon.h"
 
 #define TIMEVALUES_COUNT 12
 #define RIBBON_SIZE 60
 
-//struct K2000State{
-//  int currentIteration;
-//  int size = 3;
-//};
-//
-//struct ConfigurationState{
-//
-//};
-//
-//struct TimerState{
-//
-//};
-//
-//struct State{
-//  K2000State k2000State;
-//  ConfigurationState configState;
-//  TimerState timerState;
-//};
+typedef struct{
+  uint8_t R;
+  uint8_t G;
+  uint8_t B;
+} Color;
 
-
-
-//Color colors[2] = {
-//  {0, 255, 0},
-//  {0, 0, 255}
-//};
 
 int buttonPin = 2;
 int ribbonPin = 6;
@@ -40,6 +20,8 @@ int count = 0;
 int currentState = 1;
 int timeValues[TIMEVALUES_COUNT] = {1, 2, 3, 4, 5, 10, 15, 20, 25, 30, 45, 60};
 
+
+
 void setup() {
   //pinMode(buttonPin, INPUT);
   strip.begin();
@@ -49,96 +31,53 @@ void setup() {
   strip.setPixelColor(7, 0, 255, 0);
   strip.setPixelColor(8, 0, 0, 255);
   strip.setPixelColor(9, 0, 255, 0);
-//  for(int i = 0; i < RIBBON_SIZE; i++){
-//    strip.setPixelColor(i, (i*237)%256, (i*176)%256, (i*542)%256);
-//  }
+
   strip.setBrightness(60);
   strip.show();
+  delay(1000);
   Serial.begin(9600);
 }
 
 void loop() {
-//  delay(500);
-//  uint32_t color = strip.getPixelColor(count);
-//  uint8_t red = (color >> 16)+4;
-//  uint8_t green = (color >> 8)+4;
-//  uint8_t blue = color+4;
-//  Serial.print(red);
-//  Serial.print(";");
-//  Serial.print(green);
-//  Serial.print(";");
-//  Serial.print(blue);
-//  Serial.print("\r\n");
-//  count++;
-//  strip.setPixelColor(count, red, green, blue);
-//  strip.setBrightness(60);
-//  strip.show();
-//  
-  uint32_t color = strip.getPixelColor(0);
-  for(int i = 0; i < RIBBON_SIZE-1; i++){
-    uint32_t nextColor = strip.getPixelColor(i+1);
-    uint8_t red = (nextColor >> 16)+4;
-    uint8_t green = (nextColor >> 8)+4;
-    uint8_t blue = nextColor+4;
-    strip.setPixelColor(i, red, green, blue);
+  delay(100);
+  shift(1);
+  delay(100);
+  shift(-1);
+}
+
+void shift(int span)
+{
+  if(span == 1){
+  
+    Color color = getColor(0);
+    for(int i = 0; i < RIBBON_SIZE-1; i++){
+      Color nextColor = getColor(i+span);
+      setColor(i, nextColor);
+    }
+    setColor((RIBBON_SIZE-span)%RIBBON_SIZE, color);
+  }else{
+    Color color = getColor(RIBBON_SIZE-1);
+    for(int i = RIBBON_SIZE-1; i > 0; i--){
+      Color nextColor = getColor(i+span);
+      setColor(i, nextColor);
+    }
+    setColor(0, color);
   }
+  strip.setBrightness(60);
+  strip.show();
+}
+
+Color getColor(int position){
+  uint32_t color = strip.getPixelColor(position);
+  
   uint8_t red = (color >> 16)+4;
   uint8_t green = (color >> 8)+4;
   uint8_t blue = color+4;
-  strip.setPixelColor(RIBBON_SIZE-1, red, green, blue);
-  strip.setBrightness(60);
-  delay(50);
-  strip.show();
 
-
-
-
-  
-  
-//  int val = digitalRead(buttonPin);
-//  if(val != currentState)
-//  {
-//    if(val == 0){
-//      count++;
-//    }
-//    currentState = val;
-//  }
-//  int currentTimeValue = getCurrentTimeValue();
-//
-//  
-//  printState(ribb.getState());
-//  
-//  Serial.println(currentTimeValue);
-//  colorRibbonByTime(currentTimeValue);
-//  //strip.setPixelColor(currentTimeValue, 0, 255, 0);
-//  strip.setBrightness(40);
-//  strip.show();
+  return {red, green, blue};
 }
 
-//void printState(uint32_t rib[]){
-//  for(short i = 0; i<RIBBON_SIZE; i++){
-//    Serial.print(rib[i]);
-//    Serial.print(' ');
-//  }
-//  Serial.println();
-//}
+void setColor(int position, Color color){
+  strip.setPixelColor(position, color.R, color.G, color.B);
+}
 
-//int getCurrentTimeValue(){
-//  return timeValues[count % TIMEVALUES_COUNT];
-//}
-//
-//void colorRibbonByTime(int timevalue){
-//    int ledCountInAMinute = RIBBON_SIZE / timevalue;
-//    int colorIndex = 0;
-//    for(int offset = 0; offset < RIBBON_SIZE; offset += ledCountInAMinute){
-//      colorIndex = 1 - colorIndex;
-//      for(int led = offset; led < offset+ledCountInAMinute; led++){
-//        //Serial.println(led);
-//        strip.setPixelColor(led, colors[colorIndex].red, colors[colorIndex].green, colors[colorIndex].blue);
-//      }
-//    }   
-//}
-
-//void k2000(Adafruit_NeoPixel &strip){
-//  
-//}
