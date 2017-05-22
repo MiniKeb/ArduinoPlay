@@ -19,45 +19,62 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(RIBBON_SIZE, ribbonPin, NEO_GRB + NE
 int count = 0;
 int currentState = 1;
 int timeValues[TIMEVALUES_COUNT] = {1, 2, 3, 4, 5, 10, 15, 20, 25, 30, 45, 60};
-
-
+int wormOffset = 10;
+int wormLength = 8;
+int direction = 1;
 
 void setup() {
   //pinMode(buttonPin, INPUT);
   strip.begin();
 
-  strip.setPixelColor(5, 0, 255, 0);
-  strip.setPixelColor(6, 255, 0, 0);
-  strip.setPixelColor(7, 0, 255, 0);
-  strip.setPixelColor(8, 0, 0, 255);
-  strip.setPixelColor(9, 0, 255, 0);
+//  for(int w = wormOffset; w < wormOffset + wormLength; w++){
+//    strip.setPixelColor(w, 50, 0, 0);
+//  }
+  strip.setPixelColor(10, 50, 0, 0);
+  strip.setPixelColor(11, 100, 0, 0);
+  strip.setPixelColor(12, 200, 0, 0);
+  strip.setPixelColor(13, 255, 0, 0);
+  strip.setPixelColor(14, 255, 0, 0);
+  strip.setPixelColor(15, 200, 0, 0);
+  strip.setPixelColor(16, 100, 0, 0);
+  strip.setPixelColor(17, 50, 0, 0);
+  
 
-  strip.setBrightness(60);
+  
+  strip.setBrightness(40);
   strip.show();
   delay(1000);
   Serial.begin(9600);
 }
 
 void loop() {
-  delay(100);
-  shift(1);
-  delay(100);
-  shift(-1);
+  
+  if(wormOffset + wormLength == RIBBON_SIZE){
+    direction = -1;
+  }
+  else if(wormOffset == 0){
+    direction = 1;
+  }
+  shift(direction);
+  delay(50);
 }
 
 void shift(int span)
 {
   Color color = getColor(0);
   int i = 0;
+  int previous;
   do{
-    int next = (i+ span + RIBBON_SIZE) % RIBBON_SIZE;
-      Color nextColor = getColor(next);
-      setColor(i, nextColor);
+    int next = (i - span + RIBBON_SIZE) % RIBBON_SIZE;
+    Color nextColor = getColor(next);
+    setColor(i, nextColor);
+    previous = i;
     i = next;
   }while(i != 0);
-  setColor(i, color);
-
-  strip.setBrightness(60);
+  setColor(previous, color);
+  
+  wormOffset += span;
+  
   strip.show();
 }
 
