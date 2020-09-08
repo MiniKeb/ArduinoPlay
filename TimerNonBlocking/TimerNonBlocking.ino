@@ -9,19 +9,28 @@ struct Color{
   byte blue;
 };
 
+auto timer = timer_create_default();
+
 int ledCount = 60;
 int durationSeconds = 60;
 int thresholdSeconds = 30;
-Color normal = { 0, 255, 0 };
+//Color normal = { 0, 255, 0 };
+Color normal = { 0, 0, 255 };
 Color warning = { 255, 115, 0 };
 int remainingLoop = ledCount;
 int finishedLoopCount = 0;
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(ledCount, PIN, NEO_GRB + NEO_KHZ800);
 
+bool decrease(){
+  remainingLoop--;
+  strip.setPixelColor(remainingLoop, 0, 0, 0);
+  return true;
+}
+
 void setup() {
   strip.begin();
-  
+  timer.every(1000, (bool(*)(void*))decrease);
   for (int i = 0; i < ledCount; i++ ) {
     strip.setPixelColor(i, normal.red, normal.green, normal.blue);
   }
@@ -30,17 +39,26 @@ void setup() {
 }
 
 void loop() {
-  if(!isFinished()){  
-    decreaseTime();
-    if(isUnderThreshold()){
-      changeTimerColor(warning);
-    }
-  }else{
-    rainbow(finishedLoopCount++);
-    delay(200);
-  }
-  strip.show();
+  timer.tick();
+  
+//  if(!isFinished()){  
+//    decreaseTime();
+//    if(isUnderThreshold()){
+//      changeTimerColor(warning);
+//    }
+//  }else{
+//    rainbow(finishedLoopCount++);
+//    delay(200);
+//  }
+  //strip.show();
+
+//  for (int i = 0; i < ledCount; i++ ) {
+//    strip.setPixelColor(i, normal.red, normal.green, normal.blue);
+//  }
+//  strip.setBrightness(200);
+  strip.show(); 
 }
+
 
 void decreaseTime(){
   float wait = (float)durationSeconds / ledCount;
