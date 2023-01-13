@@ -2,22 +2,6 @@
     "version": 4,
     "configurations": [
         {
-            "name": "Win32",
-            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/VC/Tools/MSVC/14.26.28801/bin/Hostx64/x64/cl.exe",
-            "compilerArgs": [],
-            "intelliSenseMode": "msvc-x64",
-            "includePath": [
-                "C:\\Program Files (x86)\\Arduino\\tools\\**",
-                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\**"
-            ],
-            "forcedInclude": [
-                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h"
-            ],
-            "cStandard": "c11",
-            "cppStandard": "c++17",
-            "defines": []
-        },
-        {
             "name": "Arduino",
             "compilerPath": "C:\\Users\\srabiller\\AppData\\Local\\Arduino15\\packages\\esp8266\\tools\\xtensa-lx106-elf-gcc\\3.0.4-gcc10.3-1757bed\\bin\\xtensa-lx106-elf-g++",
             "compilerArgs": [
@@ -36,9 +20,12 @@
                 "C:\\Users\\srabiller\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\tools\\sdk\\include",
                 "C:\\Users\\srabiller\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\tools\\sdk\\lwip2\\include",
                 "C:\\Users\\srabiller\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\cores\\esp8266",
-                "C:\\Users\\srabiller\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\variants\\generic",
-                "C:\\Users\\srabiller\\Documents\\Arduino\\libraries\\arduino-timer\\src",
-                "C:\\Users\\srabiller\\Documents\\Arduino\\libraries\\Adafruit_NeoPixel",
+                "C:\\Users\\srabiller\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\variants\\nodemcu",
+                "C:\\Users\\srabiller\\Documents\\Arduino\\libraries\\DHT_sensor_library",
+                "C:\\Users\\srabiller\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\libraries\\ESP8266WiFi\\src",
+                "C:\\Users\\srabiller\\Documents\\Arduino\\libraries\\ESP8266_Influxdb\\src",
+                "C:\\Users\\srabiller\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\libraries\\ESP8266HTTPClient\\src",
+                "C:\\Users\\srabiller\\Documents\\Arduino\\libraries\\Adafruit_Unified_Sensor",
                 "c:\\users\\srabiller\\appdata\\local\\arduino15\\packages\\esp8266\\tools\\xtensa-lx106-elf-gcc\\3.0.4-gcc10.3-1757bed\\xtensa-lx106-elf\\include\\c++\\10.3.0",
                 "c:\\users\\srabiller\\appdata\\local\\arduino15\\packages\\esp8266\\tools\\xtensa-lx106-elf-gcc\\3.0.4-gcc10.3-1757bed\\xtensa-lx106-elf\\include\\c++\\10.3.0\\xtensa-lx106-elf",
                 "c:\\users\\srabiller\\appdata\\local\\arduino15\\packages\\esp8266\\tools\\xtensa-lx106-elf-gcc\\3.0.4-gcc10.3-1757bed\\xtensa-lx106-elf\\include\\c++\\10.3.0\\backward",
@@ -64,11 +51,11 @@
                 "LWIP_FEATURES=1",
                 "LWIP_IPV6=0",
                 "ARDUINO=10813",
-                "ARDUINO_ESP8266_GENERIC",
+                "ARDUINO_ESP8266_NODEMCU_ESP12E",
                 "ARDUINO_ARCH_ESP8266",
-                "ARDUINO_BOARD=\"ESP8266_GENERIC\"",
+                "ARDUINO_BOARD=\"ESP8266_NODEMCU_ESP12E\"",
                 "LED_BUILTIN=2",
-                "FLASHMODE_DOUT",
+                "FLASHMODE_DIO",
                 "ESP8266",
                 "__DBL_MIN_EXP__=(-1021)",
                 "__cpp_attributes=200809L",
